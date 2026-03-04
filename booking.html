@@ -34,6 +34,23 @@
             <!-- Smart Form -->
             <form id="smart-booking-form" action="checkout.html" method="GET">
 
+                <!-- Auth / Guest Selection -->
+                <div class="auth-guest-selector"
+                    style="background: #f8fafc; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <strong style="color: #0f172a; display:block; font-size: 1.1rem;">Have an account?</strong>
+                        <span style="color: #64748b; font-size: 0.875rem;">Log in for faster booking</span>
+                    </div>
+                    <a href="login.html" class="btn btn-outline" style="padding: 6px 12px; font-size: 0.9rem;">Sign Up /
+                        Log In</a>
+                </div>
+
+                <div class="text-center" style="margin-bottom: 1.5rem;">
+                    <span
+                        style="background: #e2e8f0; color: #475569; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">OR
+                        CONTINUE AS GUEST</span>
+                </div>
+
                 <div class="form-row" style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
                     <div class="form-group" style="flex: 2;">
                         <label for="patient-name">Patient Name</label>
@@ -226,6 +243,13 @@
                     symptomsSection.style.display = 'none';
                 }
             });
+
+            // Default Specialty to General Physician if not selected
+            if (!specialtySelect.value) {
+                specialtySelect.value = 'general';
+                const event = new Event('change');
+                specialtySelect.dispatchEvent(event);
+            }
 
             // Handle submission logic (for prototype, goes to checkout directly)
             proceedBtn.addEventListener('click', () => {
