@@ -72,6 +72,25 @@
 
             <!-- Main Content -->
             <main class="dashboard-main">
+
+                <!-- Profile Section -->
+                <div class="profile-card mb-4"
+                    style="background: white; border: 1px solid #e2e8f0; padding: 1.5rem; border-radius: 12px; display: flex; justify-content: space-between; align-items: center;">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <div style="width: 50px; height: 50px; background: #e0f2fe; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: #0284c7; font-weight: bold; font-size: 1.2rem;"
+                            id="user-initial">P</div>
+                        <div>
+                            <h3 style="margin: 0; font-size: 1.25rem;" id="user-fullname">Patient User</h3>
+                            <span style="color: #64748b; font-size: 0.875rem;" id="user-auth-method">via Phone</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline"
+                        style="padding: 6px 16px; display: flex; align-items: center; gap: 8px;"
+                        onclick="editProfileName()">
+                        <i data-lucide="edit-2" style="width: 16px; height: 16px;"></i> Edit Name
+                    </button>
+                </div>
+
                 <div class="dashboard-header">
                     <h2>Your Consultations</h2>
                     <a href="doctors.html" class="btn btn-primary">Book New Consult</a>
@@ -129,6 +148,30 @@
 
     <!-- Custom JS -->
     <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const storedName = localStorage.getItem('pulse_user_name');
+            if (storedName) {
+                updateProfileUI(storedName);
+            }
+        });
+
+        function updateProfileUI(name) {
+            document.getElementById('user-fullname').innerText = name;
+            document.getElementById('user-initial').innerText = name.charAt(0).toUpperCase();
+        }
+
+        function editProfileName() {
+            const currentName = document.getElementById('user-fullname').innerText;
+            const newName = prompt("Enter your Full Name:", currentName);
+
+            if (newName && newName.trim() !== "") {
+                const cleanedName = newName.trim();
+                localStorage.setItem('pulse_user_name', cleanedName);
+                updateProfileUI(cleanedName);
+            }
+        }
+    </script>
 </body>
 
 </html>

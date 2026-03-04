@@ -17,6 +17,10 @@
             const doctorCards = document.querySelectorAll('.doctor-card');
 
             function filterDoctors() {
+                // Get active search query
+                const searchInput = document.getElementById('doctor-search');
+                const searchQuery = searchInput ? searchInput.value.toLowerCase().trim() : '';
+
                 // Get active specialties
                 const activeSpecialties = Array.from(specialtyFilters)
                     .filter(checkbox => checkbox.checked)
@@ -34,6 +38,15 @@
                     const cardSpecialty = card.getAttribute('data-specialty');
                     const cardAvailability = card.getAttribute('data-availability');
 
+                    // Extract text for search filtering
+                    const docName = card.querySelector('h3').textContent.toLowerCase();
+                    const docSpecText = card.querySelector('.doc-specialty').textContent.toLowerCase();
+                    const docQualText = card.querySelector('.doc-qual').textContent.toLowerCase();
+                    const searchableText = `${docName} ${docSpecText} ${docQualText}`;
+
+                    // Check search query match
+                    const matchesSearch = searchQuery === '' || searchableText.includes(searchQuery);
+
                     // Check specialty match
                     const matchesSpecialty = isAllSpecialties || activeSpecialties.length === 0 || activeSpecialties.includes(cardSpecialty);
 
@@ -45,7 +58,7 @@
                     }
 
                     // Show or hide based on match
-                    if (matchesSpecialty && matchesAvailability) {
+                    if (matchesSearch && matchesSpecialty && matchesAvailability) {
                         card.style.display = 'block';
                     } else {
                         card.style.display = 'none';
@@ -77,6 +90,12 @@
             availabilityFilters.forEach(checkbox => {
                 checkbox.addEventListener('change', filterFiltering);
             });
+
+            // Attach listener to search bar
+            const searchInput = document.getElementById('doctor-search');
+            if (searchInput) {
+                searchInput.addEventListener('input', filterFiltering);
+            }
 
             // Initial run
             filterDoctors();
@@ -131,6 +150,17 @@
     <!-- Directory Content -->
     <section class="directory-section section">
         <div class="container directory-layout">
+
+            <!-- Top Search Bar (Spans full width above grid) -->
+            <div class="directory-search-bar" style="grid-column: 1 / -1; margin-bottom: 2rem;">
+                <div class="search-input-wrapper" style="position: relative; max-width: 600px; margin: 0 auto;">
+                    <i data-lucide="search"
+                        style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+                    <input type="text" id="doctor-search" class="form-control"
+                        placeholder="Search doctor by name, specialty, or symptom..."
+                        style="padding-left: 48px; border-radius: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); font-size: 1.05rem;">
+                </div>
+            </div>
 
             <!-- Filters Sidebar -->
             <aside class="filters-sidebar">

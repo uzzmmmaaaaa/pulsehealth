@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In | PulseHealth</title>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            background-color: #f8fafc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: var(--font-primary);
+        }
+
+        .login-container {
+            background: white;
+            padding: 2.5rem 2rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .login-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-brand span {
+            color: var(--secondary-teal);
+        }
+
+        .login-subtitle {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .auth-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 1rem;
+            border: 1px solid #e2e8f0;
+            background: white;
+            color: #1e293b;
+        }
+
+        .auth-btn:hover {
+            background: #f1f5f9;
+            transform: translateY(-1px);
+        }
+
+        .auth-btn img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+            color: #94a3b8;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e2e8f0;
+            margin: 0 10px;
+        }
+
+        .guest-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .guest-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-container">
+        <a href="index.html" class="login-brand">
+            <i data-lucide="stethoscope" class="text-teal"></i>
+            Pulse<span>Health</span>
+        </a>
+        <p class="login-subtitle">Welcome back! Please log in to continue.</p>
+
+        <!-- Google Auth -->
+        <button class="auth-btn" onclick="handleLogin('Google')">
+            <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google Logo">
+            Continue with Google
+        </button>
+
+        <!-- Phone Auth -->
+        <button class="auth-btn" onclick="handleLogin('Phone')">
+            <i data-lucide="phone" style="color: #0f766e; width: 20px; height: 20px;"></i>
+            Continue with Phone Number
+        </button>
+
+        <div class="divider">OR</div>
+
+        <!-- Guest Flow -->
+        <a href="booking.html" class="btn btn-primary"
+            style="width: 100%; display: block; padding: 12px; text-decoration: none;">
+            Book as Guest
+        </a>
+
+        <a href="index.html" class="guest-link">Return to Home</a>
+    </div>
+
+    <!-- Script to simulate login taking user to dashboard -->
+    <script>
+        lucide.createIcons();
+
+        function handleLogin(method) {
+            // Simulate Authentication Process
+            let btn = event.currentTarget;
+            let originalText = btn.innerHTML;
+            btn.innerHTML = `<i data-lucide="loader" class="spin" style="width: 20px; height: 20px;"></i> Authenticating...`;
+            lucide.createIcons();
+
+            setTimeout(() => {
+                // Pre-fill a mock user state in local storage
+                localStorage.setItem('pulse_user_auth', 'true');
+                localStorage.setItem('pulse_user_name', 'Patient User');
+                window.location.href = 'dashboard.html';
+            }, 1000);
+        }
+    </script>
+</body>
+
+</html>
