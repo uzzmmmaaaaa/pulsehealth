@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ongoing Consultation | PulseHealth</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .consultation-header {
+            background: var(--primary-blue);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: -2rem;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .panel {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .panel h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .info-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .info-value {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .upload-area {
+            border: 2px dashed var(--teal);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--bg-light);
+        }
+
+        .upload-area:hover {
+            background: #e6fcf5;
+            border-color: var(--secondary-teal);
+        }
+
+        .upload-icon {
+            color: var(--teal);
+            margin-bottom: 1rem;
+        }
+
+        .file-list {
+            margin-top: 1.5rem;
+        }
+
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8fafc;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .action-bars {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="navbar-brand">
+                <i data-lucide="stethoscope" class="text-teal"></i> Pulse<span>Health</span>
+            </a>
+            <div class="nav-links">
+                <a href="dashboard.html" class="btn btn-outline" style="padding: 8px 20px;">My Dashboard</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="consultation-header">
+        <div class="container">
+            <h1>Ongoing Consultation</h1>
+            <p>Your secure consultation room is active.</p>
+        </div>
+    </header>
+
+    <main class="page-content container" style="margin-top: 4rem;">
+        <div class="dashboard-grid">
+
+            <!-- Left Column: Details -->
+            <div>
+                <div class="panel">
+                    <h3><i data-lucide="user"></i> Patient Details</h3>
+                    <div class="info-row"><span class="info-label">Name</span><span class="info-value">Abhishek</span>
+                    </div>
+                    <div class="info-row"><span class="info-label">Age</span><span class="info-value">30 Years</span>
+                    </div>
+                    <div class="info-row"><span class="info-label">Consultation Mode</span><span
+                            class="info-value text-teal">Video Call</span></div>
+                    <div class="info-row"><span class="info-label">Symptoms</span><span class="info-value">Fever, Body
+                            Ache</span></div>
+                </div>
+
+                <div class="panel">
+                    <h3><i data-lucide="stethoscope"></i> Doctor Details</h3>
+                    <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem;">
+                        <img src="images/doctors/doctor_1.jpg" alt="Dr"
+                            style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;">
+                        <div>
+                            <div class="info-value">Dr. Ananya Sharma</div>
+                            <div class="info-label">General Physician</div>
+                        </div>
+                    </div>
+                    <div class="action-bars">
+                        <button class="btn btn-primary btn-block"><i data-lucide="video"></i> Join Video Room</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Portal -->
+            <div>
+                <div class="panel" style="height: 100%;">
+                    <h3><i data-lucide="folder-open"></i> Two-Way File Portal</h3>
+                    <p class="text-muted" style="font-size: 0.9rem; margin-bottom: 1.5rem;">Upload medical reports, past
+                        prescriptions, or images. Both you and the doctor can view files here.</p>
+
+                    <div class="upload-area" onclick="document.getElementById('file-upload').click()">
+                        <div class="upload-icon"><i data-lucide="upload-cloud" width="40" height="40"></i></div>
+                        <div class="info-value">Click to Upload Files</div>
+                        <div class="info-label mt-2">Support PDFs, JPGs, PNGs</div>
+                        <input type="file" id="file-upload" style="display: none;" multiple accept=".pdf,image/*">
+                    </div>
+
+                    <div class="file-list" id="file-container">
+                        <div class="file-item">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <i data-lucide="file-text" class="text-blue"></i>
+                                <div>
+                                    <div class="info-value" style="font-size: 0.9rem;">blood_report_2026.pdf</div>
+                                    <div class="info-label text-teal">Uploaded by You</div>
+                                </div>
+                            </div>
+                            <button class="btn btn-outline" style="padding: 4px 8px; font-size: 0.8rem;">View</button>
+                        </div>
+
+                        <div class="file-item" style="border-left: 4px solid var(--primary-blue);">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <i data-lucide="file-plus" class="text-blue"></i>
+                                <div>
+                                    <div class="info-value" style="font-size: 0.9rem;">E-Prescription_Ananya.pdf</div>
+                                    <div class="info-label text-primary">Uploaded by Dr. Ananya</div>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary"
+                                style="padding: 4px 8px; font-size: 0.8rem;">Download</button>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-4" style="border-top: 1px solid var(--border-color); text-align: center;">
+                        <button class="btn btn-primary" style="width: 100%; margin-bottom: 10px;">Opt for Medicine
+                            Delivery (Rs. 249)</button>
+                        <a href="dashboard.html" class="text-muted"
+                            style="font-size: 0.9rem; text-decoration: underline;">End Consultation</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer style="margin-top: 4rem;">
+        <div class="container text-center text-muted" style="padding: 20px 0;">
+            &copy; 2026 PulseHealth. domain: pulse-health-iota.vercel.app
+        </div>
+    </footer>
+
+    <script>lucide.createIcons();</script>
+    <script>
+        document.getElementById('file-upload').addEventListener('change', function (e) {
+            const container = document.getElementById('file-container');
+            for (let file of this.files) {
+                const item = document.createElement('div');
+                item.className = 'file-item';
+                item.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <i data-lucide="file" class="text-teal"></i>
+                        <div>
+                            <div class="info-value" style="font-size: 0.9rem;">${file.name}</div>
+                            <div class="info-label text-teal">Uploaded Just Now</div>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline" style="padding: 4px 8px; font-size: 0.8rem;">View</button>
+                `;
+                container.prepend(item);
+                lucide.createIcons();
+            }
+        });
+    </script>
+</body>
+
+</html>

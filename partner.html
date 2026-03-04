@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partner With Us | PulseHealth</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pages.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="navbar-brand">
+                <i data-lucide="stethoscope" class="text-teal"></i>
+                Pulse<span>Health</span>
+            </a>
+            <div class="nav-links">
+                <a href="doctors.html">Find a Doctor</a>
+                <a href="dashboard.html">My Dashboard</a>
+                <a href="about.html">About Us</a>
+                <a href="partner.html" style="color: var(--secondary-teal);">Partner</a>
+                <a href="doctors.html" class="btn btn-primary" style="padding: 8px 20px;">Book Consult</a>
+            </div>
+            <button class="mobile-menu-btn"><i data-lucide="menu"></i></button>
+        </div>
+    </nav>
+
+    <div class="mobile-menu">
+        <a href="doctors.html">Find a Doctor</a>
+        <a href="dashboard.html">My Dashboard</a>
+        <a href="about.html">About Us</a>
+        <a href="partner.html" style="color: var(--secondary-teal);">Partner</a>
+    </div>
+
+    <header class="page-banner" style="background-color: var(--text-dark);">
+        <div class="container">
+            <h1>Join the PulseHealth Ecosystem</h1>
+            <p>Whether you're a doctor looking to expand your digital practice, or a quick-commerce network wanting to
+                integrate digital prescriptionsâ€”let's build the future of Indian healthcare together.</p>
+        </div>
+    </header>
+
+    <section class="partner-section">
+        <div class="container">
+            <div class="partner-grid">
+
+                <div class="partner-info">
+                    <h2>Who we partner with</h2>
+                    <p class="text-muted" style="font-size: 1.125rem;">We are building a deeply integrated healthcare
+                        stack. We plug into existing networks to deliver a magical experience for the patient.</p>
+
+                    <div class="partner-types">
+                        <div class="partner-type doc">
+                            <h3><i data-lucide="stethoscope" class="text-primary"></i> For Doctors</h3>
+                            <p class="text-muted mb-0">Monetize your free time. Get access to a steady stream of
+                                patients across India. We handle the tech, billing, and patient acquisition while you
+                                focus on care.</p>
+                        </div>
+
+                        <div class="partner-type qcomm">
+                            <h3><i data-lucide="shopping-bag" style="color: #EC4899;"></i> For Quick Commerce
+                                (Blinkit/Zepto)</h3>
+                            <p class="text-muted mb-0">Integrate our API to instantly route verified, digital
+                                e-prescriptions to your local dark stores for 30-minute doorstep medicine delivery.</p>
+                        </div>
+
+                        <div class="partner-type">
+                            <h3><i data-lucide="store" class="text-teal"></i> For Pharmacies</h3>
+                            <p class="text-muted mb-0">Become a certified fulfillment partner in your pin code. Receive
+                                direct high-intent orders from patients leaving our consultation platform.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="partner-form-wrapper">
+                    <div class="partner-form-card">
+                        <h3 style="margin-bottom: 8px;">Let's Talk</h3>
+                        <p class="text-muted" style="margin-bottom: 24px;">Drop your details and our partnerships team
+                            will reach out within 24 hours.</p>
+
+                        <form
+                            onsubmit="event.preventDefault(); alert('Request submitted successfully! We will contact you soon.');">
+                            <div class="form-group">
+                                <label>Partnership Type</label>
+                                <select class="form-control" required>
+                                    <option value="">Select option...</option>
+                                    <option>I am a Doctor</option>
+                                    <option>Quick Commerce / Delivery Network</option>
+                                    <option>Local Pharmacy</option>
+                                    <option>Other / API Integration</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Organization / Your Name</label>
+                                <input type="text" class="form-control" placeholder="E.g., Dr. Sharma or FastMeds Ltd"
+                                    required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Email Address</label>
+                                <input type="email" class="form-control" placeholder="you@company.com" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <input type="tel" class="form-control" placeholder="+91" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Message (Optional)</label>
+                                <textarea class="form-control" rows="3"
+                                    placeholder="How can we work together?"></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-block"
+                                style="padding: 14px; font-size: 1.1rem;">Submit Request</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="margin-top:0;">
+        <div class="container text-center text-muted" style="padding: 20px 0;">
+            &copy;
+            <script>document.write(new Date().getFullYear())</script> PulseHealth. All rights reserved.
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

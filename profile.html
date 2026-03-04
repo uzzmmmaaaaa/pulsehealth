@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Ananya Sharma | PulseHealth</title>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/profile.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="navbar-brand">
+                <i data-lucide="stethoscope" class="text-teal"></i>
+                Pulse<span>Health</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="doctors.html" style="color: var(--secondary-teal);">Find a Doctor</a>
+                <a href="dashboard.html">My Dashboard</a>
+                <a href="about.html">About Us</a>
+                <a href="partner.html">Partner</a>
+            </div>
+
+            <button class="mobile-menu-btn">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu">
+        <a href="doctors.html">Find a Doctor</a>
+        <a href="dashboard.html">My Dashboard</a>
+        <a href="about.html">About Us</a>
+        <a href="partner.html">Partner</a>
+    </div>
+
+    <!-- Profile Context -->
+    <div class="bg-light" style="border-bottom: 1px solid var(--border-color);">
+        <div class="container" style="padding: 16px 20px;">
+            <a href="doctors.html" class="text-muted"
+                style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem;">
+                <i data-lucide="arrow-left" width="16" height="16"></i> Back to Directory
+            </a>
+        </div>
+    </div>
+
+    <section class="profile-section section">
+        <div class="container profile-layout">
+
+            <!-- Main Content -->
+            <div class="profile-main">
+                <div class="profile-header-card">
+                    <img src="images/doctors/doctor_3.jpg"
+                        alt="Dr. Ananya Sharma" class="profile-avatar-large">
+
+                    <div class="profile-title">
+                        <h1>Dr. Ananya Sharma</h1>
+                        <p class="text-primary font-weight-bold"
+                            style="font-size: 1.125rem; font-weight: 600; margin-bottom: 4px;">General Physician</p>
+                        <p class="text-muted">MBBS, MD (Medicine)</p>
+
+                        <div class="profile-badges">
+                            <span class="badge badge-teal"><i data-lucide="shield-check" width="12" height="12"
+                                    style="margin-right:4px;"></i> Verified License</span>
+                            <span class="badge badge-blue">English, Hindi</span>
+                            <span class="badge" style="background: rgba(255,193,7,0.1); color: #d97706;"><i
+                                    data-lucide="star" fill="#FFC107" color="#FFC107" width="12" height="12"
+                                    style="margin-right:4px;"></i> 4.9 (120 Ratings)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h3>About Dr. Sharma</h3>
+                    <p>Dr. Ananya Sharma is a highly experienced General Physician with over 8 years of clinical
+                        practice. She specializes in accurate diagnosis and effective treatment plans for common
+                        ailments such as viral fevers, respiratory infections, gastrointestinal issues, and chronic
+                        disease management (diabetes, hypertension).</p>
+                    <p>She believes in a patient-first approach, ensuring that every consultation is thorough and easily
+                        understandable.</p>
+                </div>
+
+                <div class="info-box">
+                    <h3>Patient Reviews</h3>
+                    <div class="review-item">
+                        <div
+                            style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                            <span class="reviewer-name">Rahul D.</span>
+                            <div style="color: #FFC107;"><i data-lucide="star" fill="#FFC107" width="14"
+                                    height="14"></i><i data-lucide="star" fill="#FFC107" width="14" height="14"></i><i
+                                    data-lucide="star" fill="#FFC107" width="14" height="14"></i><i data-lucide="star"
+                                    fill="#FFC107" width="14" height="14"></i><i data-lucide="star" fill="#FFC107"
+                                    width="14" height="14"></i></div>
+                        </div>
+                        <p class="review-text">"Dr. Sharma was very patient in listening to all my symptoms. The
+                            prescription helped me recover from my flu within 2 days. Highly recommended."</p>
+                    </div>
+                    <div class="review-item">
+                        <div
+                            style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                            <span class="reviewer-name">Sneha K.</span>
+                            <div style="color: #FFC107;"><i data-lucide="star" fill="#FFC107" width="14"
+                                    height="14"></i><i data-lucide="star" fill="#FFC107" width="14" height="14"></i><i
+                                    data-lucide="star" fill="#FFC107" width="14" height="14"></i><i data-lucide="star"
+                                    fill="#FFC107" width="14" height="14"></i><i data-lucide="star" width="14"
+                                    height="14"></i></div>
+                        </div>
+                        <p class="review-text">"Quick connect and clear diagnosis. The medicine delivery option at
+                            checkout was a lifesaver."</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Booking Sidebar -->
+            <div class="booking-sidebar">
+                <div class="booking-widget">
+                    <p class="text-muted" style="margin-bottom: 8px;">Flat Consultation Fee</p>
+                    <div class="booking-price">Rs.200</div>
+                    <p class="text-teal"
+                        style="font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                        <i data-lucide="clock" width="18" height="18"></i> Available in 15 mins
+                    </p>
+
+                    <hr>
+
+                    <ul class="features-list">
+                        <li><i data-lucide="video"></i> Secure Video Call</li>
+                        <li><i data-lucide="file-signature"></i> Instant Digital Prescription</li>
+                        <li><i data-lucide="truck"></i> Optional 30-Min Medicine Delivery</li>
+                        <li><i data-lucide="rotate-ccw"></i> Free Follow-up in 3 days</li>
+                    </ul>
+
+                    <a href="booking.html" class="btn btn-primary btn-block"
+                        style="font-size: 1.125rem; padding: 16px;">Proceed to Book</a>
+                    <p class="text-muted" style="font-size: 0.8rem; margin-top: 16px;"><i data-lucide="lock" width="12"
+                            height="12"></i> Payments are 100% secure.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center text-muted" style="padding: 20px 0;">
+            &copy;
+            <script>document.write(new Date().getFullYear())</script> PulseHealth. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+</body>
+
+</html>
