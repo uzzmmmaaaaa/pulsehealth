@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pediatrics | PulseHealth</title>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/doctors.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="navbar-brand">
+                <i data-lucide="stethoscope" class="text-teal"></i>
+                Pulse<span>Health</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="doctors.html">Find a Doctor</a>
+                <a href="dashboard.html">My Dashboard</a>
+                <a href="about.html">About Us</a>
+                <a href="partner.html">Partner</a>
+                <a href="booking.html" class="btn btn-primary" style="padding: 8px 20px;">Book Consult</a>
+            </div>
+
+            <button class="mobile-menu-btn">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu">
+        <a href="doctors.html">Find a Doctor</a>
+        <a href="dashboard.html">My Dashboard</a>
+        <a href="about.html">About Us</a>
+        <a href="partner.html">Partner</a>
+        <a href="booking.html" class="btn btn-primary btn-block text-center mt-4">Book Rs.200 Consult</a>
+    </div>
+
+    <!-- Page Header -->
+    <header class="page-header text-white" style="background-color: var(--orange);">
+        <div class="container">
+            <h1 style="display: flex; align-items: center; gap: 10px; justify-content: center;"><i data-lucide="baby"
+                    width="32" height="32"></i> Pediatric Specialists</h1>
+            <p>Connect with highly qualified Pediatricians instantly for just Rs.200</p>
+        </div>
+    </header>
+
+    <!-- Directory Content -->
+    <section class="directory-section section">
+        <div class="container directory-layout" style="grid-template-columns: 1fr;">
+
+            <!-- Doctors Grid -->
+            <main class="doctors-grid" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));">
+
+                <!-- Doctor Card 4 -->
+                <div class="doctor-card">
+                    <div class="doc-card-header">
+                        <img src="images/doctors/doctor_4.jpg"
+                            alt="Dr. Vikram Singh" class="doc-avatar">
+                        <div class="doc-info-brief">
+                            <h3>Dr. Vikram Singh</h3>
+                            <span class="doc-specialty text-primary">Pediatrics</span>
+                            <span class="doc-qual">MBBS, MD (Pediatrics)</span>
+                            <div class="doc-rating">
+                                <i data-lucide="star" fill="#FFC107" color="#FFC107" width="16" height="16"></i>
+                                <span>4.7 (150+ Reviews)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="doc-card-details">
+                        <div class="detail-row">
+                            <i data-lucide="briefcase" class="text-muted" width="16" height="16"></i>
+                            <span>10 Years Experience</span>
+                        </div>
+                        <div class="detail-row">
+                            <i data-lucide="languages" class="text-muted" width="16" height="16"></i>
+                            <span>English, Hindi, Punjabi</span>
+                        </div>
+                    </div>
+                    <div class="doc-card-footer">
+                        <div class="price-availability">
+                            <span class="price">Rs.200</span>
+                            <span class="availability text-teal"><i data-lucide="clock" width="14" height="14"></i>
+                                Available Now</span>
+                        </div>
+                        <a href="booking.html" class="btn btn-primary btn-block">Book Video Consult</a>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center text-muted" style="padding: 20px 0;">
+            &copy;
+            <script>document.write(new Date().getFullYear())</script> PulseHealth. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+</body>
+
+</html>

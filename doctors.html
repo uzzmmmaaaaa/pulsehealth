@@ -1,0 +1,725 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find a Doctor | PulseHealth</title>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        lucide.createIcons();
+
+        // Dynamic Filtering Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const specialtyFilters = document.querySelectorAll('#specialty-filters input[type="checkbox"]');
+            const availabilityFilters = document.querySelectorAll('#availability-filters input[type="checkbox"]');
+            const doctorCards = document.querySelectorAll('.doctor-card');
+
+            function filterDoctors() {
+                // Get active specialties
+                const activeSpecialties = Array.from(specialtyFilters)
+                    .filter(checkbox => checkbox.checked)
+                    .map(checkbox => checkbox.value);
+
+                // If "all" is checked, we act like everything is valid for specialty
+                const isAllSpecialties = activeSpecialties.includes('all');
+
+                // Get active availability
+                const activeAvailability = Array.from(availabilityFilters)
+                    .filter(checkbox => checkbox.checked)
+                    .map(checkbox => checkbox.value);
+
+                doctorCards.forEach(card => {
+                    const cardSpecialty = card.getAttribute('data-specialty');
+                    const cardAvailability = card.getAttribute('data-availability');
+
+                    // Check specialty match
+                    const matchesSpecialty = isAllSpecialties || activeSpecialties.length === 0 || activeSpecialties.includes(cardSpecialty);
+
+                    // Check availability match (card availability is a space-separated string)
+                    let matchesAvailability = true;
+                    if (activeAvailability.length > 0) {
+                        const cardAvailArray = cardAvailability ? cardAvailability.split(' ') : [];
+                        matchesAvailability = activeAvailability.some(v => cardAvailArray.includes(v));
+                    }
+
+                    // Show or hide based on match
+                    if (matchesSpecialty && matchesAvailability) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+
+            // Handle "All Specialties" exclusivity logic to be safe
+            specialtyFilters.forEach(checkbox => {
+                checkbox.addEventListener('change', (e) => {
+                    if (e.target.value === 'all' && e.target.checked) {
+                        // Uncheck others if "all" is checked
+                        specialtyFilters.forEach(cb => {
+                            if (cb.value !== 'all') cb.checked = false;
+                        });
+                    } else if (e.target.value !== 'all' && e.target.checked) {
+                        // Uncheck "all" if another is checked
+                        const allCheckbox = document.querySelector('#specialty-filters input[value="all"]');
+                        if (allCheckbox) allCheckbox.checked = false;
+                    }
+                    filterFiltering();
+                });
+            });
+
+            // Reusable trigger helper
+            function filterFiltering() { filterDoctors(); }
+
+            // Attach listeners to availability
+            availabilityFilters.forEach(checkbox => {
+                checkbox.addEventListener('change', filterFiltering);
+            });
+
+            // Initial run
+            filterDoctors();
+        });
+    </script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/doctors.css">
+</head>
+
+<body>
+
+    <!-- Navigation (Same as index.html) -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="navbar-brand">
+                <i data-lucide="stethoscope" class="text-teal"></i>
+                Pulse<span>Health</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="doctors.html" style="color: var(--secondary-teal);">Find a Doctor</a>
+                <a href="dashboard.html">My Dashboard</a>
+                <a href="about.html">About Us</a>
+                <a href="partner.html">Partner</a>
+                <a href="doctors.html" class="btn btn-primary" style="padding: 8px 20px;">Book Consult</a>
+            </div>
+
+            <button class="mobile-menu-btn">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu">
+        <a href="doctors.html" style="color: var(--secondary-teal);">Find a Doctor</a>
+        <a href="dashboard.html">My Dashboard</a>
+        <a href="about.html">About Us</a>
+        <a href="partner.html">Partner</a>
+        <a href="doctors.html" class="btn btn-primary btn-block text-center mt-4">Book Rs.200 Consult</a>
+    </div>
+
+    <!-- Page Header -->
+    <header class="page-header bg-blue text-white">
+        <div class="container">
+            <h1>Our Specialists</h1>
+            <p>Connect with highly qualified doctors instantly for just Rs.200</p>
+        </div>
+    </header>
+
+    <!-- Directory Content -->
+    <section class="directory-section section">
+        <div class="container directory-layout">
+
+            <!-- Filters Sidebar -->
+            <aside class="filters-sidebar">
+                <div class="filter-card border-bottom pb-3 mb-3">
+                    <h3 class="filter-title">Specialty</h3>
+                    <ul class="filter-list" id="specialty-filters">
+                        <li>
+                            <label class="custom-checkbox">
+                                <input type="checkbox" value="all" checked>
+                                <span class="checkmark"></span>
+                                All Specialties
+                            </label>
+                        </li>
+                        <li>
+                            <label class="custom-checkbox">
+                                <input type="checkbox" value="general">
+                                <span class="checkmark"></span>
+                                General Physician
+                            </label>
+                        </li>
+                        <li>
+                            <label class="custom-checkbox">
+                                <input type="checkbox" value="womens">
+                                <span class="checkmark"></span>
+                                Women's Health (Gynecology)
+                            </label>
+                        </li>
+                        <li>
+                            <label class="custom-checkbox">
+                                <input type="checkbox" value="psychiatry">
+                                <span class="checkmark"></span>
+                                Psychiatry & Psychology
+                            </label>
+                        </li>
+                        <li>
+                            <label class="custom-checkbox">
+                                <input type="checkbox" value="pediatrics">
+                                <span class="checkmark"></span>
+                                Pediatrics
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="filter-card">
+                    <h3 class="filter-title">Availability</h3>
+                    <ul class="filter-list" id="availability-filters">
+                        <li>
+                            <label class="custom-checkbox">
+                                <input type="checkbox" value="today" checked>
+                                <span class="checkmark"></span>
+                                Available Today
+                            </label>
+                        </li>
+                        <li>
+                            <label class="custom-checkbox">
+                                <input type="checkbox" value="next-2-hours">
+                                <span class="checkmark"></span>
+                                Next 2 Hours
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+
+            <!-- Doctors Grid -->
+            <main class="doctors-grid">
+
+                <!-- General Physicians -->
+                <div class="doctor-card" data-specialty="general" data-availability="today next-2-hours">
+                    <div class="doc-card-header">
+                        <img src="images/doctors/doctor_3.jpg" alt="Dr. Ananya Sharma" class="doc-avatar">
+                        <div class="doc-info-brief">
+                            <h3>Dr. Ananya Sharma</h3><span class="doc-specialty text-primary">General
+                                Physician</span><span class="doc-qual">MBBS, MD (Medicine), FACP</span>
+                            <div class="doc-rating"><i data-lucide="star" fill="#FFC107" color="#FFC107" width="16"
+                                    height="16"></i><span>4.9 (120+ Reviews)</span></div>
+                        </div>
+                    </div>
+                    <div class="doc-card-details">
+                        <div class="detail-row"><i data-lucide="briefcase" class="text-muted" width="16"
+                                height="16"></i><span>8 Years Exp.</span></div>
+                        <div class="detail-row"><i data-lucide="languages" class="text-muted" width="16"
+                                height="16"></i><span>English, Hindi</span></div>
+                    </div>
+                    <div class="doc-card-footer">
+                        <div class="price-availability"><span class="price">Rs.200</span><span
+                                class="availability text-teal"><i data-lucide="clock" width="14" height="14"></i>
+                                Available in 15m</span></div>
+                        <a href="booking.html" class="btn btn-primary btn-block">Consult Now</a>
+                    </div>
+                </div>
+
+                <div class="doctor-card" data-specialty="general" data-availability="today next-2-hours">
+                    <div class="doc-card-header">
+                        <img src="images/doctors/doctor_4.jpg" alt="Dr. Amit Patel" class="doc-avatar">
+                        <div class="doc-info-brief">
+                            <h3>Dr. Amit Patel</h3><span class="doc-specialty text-primary">General
+                                Physician</span><span class="doc-qual">MBBS, Family Medicine Specialist</span>
+                            <div class="doc-rating"><i data-lucide="star" fill="#FFC107" color="#FFC107" width="16"
+                                    height="16"></i><span>4.7 (85+ Reviews)</span></div>
+                        </div>
+                    </div>
+                    <div class="doc-card-details">
+                        <div class="detail-row"><i data-lucide="briefcase" class="text-muted" width="16"
+                                height="16"></i><span>12 Years Exp.</span></div>
+                        <div class="detail-row"><i data-lucide="languages" class="text-muted" width="16"
+                                height="16"></i><span>English, Gujarati</span></div>
+                    </div>
+                    <div class="doc-card-footer">
+                        <div class="price-availability"><span class="price">Rs.200</span><span
+                                class="availability text-teal"><i data-lucide="clock" width="14" height="14"></i>
+                                Available in 45m</span></div>
+                        <a href="booking.html" class="btn btn-primary btn-block">Consult Now</a>
+                    </div>
+                </div>
+
+                <div class="doctor-card" data-specialty="general" data-availability="tomorrow">
+                    <div class="doc-card-header">
+                        <img src="https://images.unsplash.com/photo-1594824436951-7f126f09bf84?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+                            alt="Dr. Neha Gupta" class="doc-avatar">
+                        <div class="doc-info-brief">
+                            <h3>Dr. Neha Gupta</h3><span class="doc-specialty text-primary">General
+                                Physician</span><span class="doc-qual">MBBS, MD (Internal Med), Diabetologist</span>
+                            <div class="doc-rating"><i data-lucide="star" fill="#FFC107" color="#FFC107" width="16"
+                                    height="16"></i><span>4.8 (210+ Reviews)</span></div>
+                        </div>
+                    </div>
+                    <div class="doc-card-details">
+                        <div class="detail-row"><i data-lucide="briefcase" class="text-muted" width="16"
+                                height="16"></i><span>6 Years Exp.</span></div>
+                        <div class="detail-row"><i data-lucide="languages" class="text-muted" width="16"
+                                height="16"></i><span>English, Hindi</span></div>
+                    </div>
+                    <div class="doc-card-footer">
+                        <div class="price-availability"><span class="price">Rs.200</span><span class="availability"><i
+                                    data-lucide="calendar" width="14" height="14"></i> Tomorrow, 10 AM</span></div>
+                        <a href="booking.html" class="btn btn-primary btn-block">Consult Now</a>
+                    </div>
+                </div>
+
+                <div class="doctor-card" data-specialty="general" data-availability="today">
+                    <div class="doc-card-header">
+                        <img src="https://images.unsplash.com/photo-1612349317150-e410f624c427?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+                            alt="Dr. Rakesh Singh" class="doc-avatar">
+                        <div class="doc-info-brief">
+                            <h3>Dr. Rakesh Singh</h3><span class="doc-specialty text-primary">General
+                                Physician</span><span class="doc-qual">MBBS, DNB, General Practice</span>
+                            <div class="doc-rating"><i data-lucide="star" fill="#FFC107" color="#FFC107" width="16"
+                                    height="16"></i><span>4.6 (60+ Reviews)</span></div>
+                        </div>
+                    </div>
+                    <div class="doc-card-details">
+                        <div class="detail-row"><i data-lucide="briefcase" class="text-muted" width="16"
+                                height="16"></i><span>4 Years Exp.</span></div>
+                        <div class="detail-row"><i data-lucide="languages" class="text-muted" width="16"
+                                height="16"></i><span>English, Hindi</span></div>
+                    </div>
+                    <div class="doc-card-footer">
+                        <div class="price-availability"><span class="price">Rs.200</span><span
+                                class="availability text-teal"><i data-lucide="clock" width="14" height="14"></i>
+                                Available Today, 6 PM</span></div>
+                        <a href="booking.html" class="btn btn-primary btn-block">Consult Now</a>
+                    </div>
+                </div>
+
+                <div class="doctor-card" data-specialty="general" data-availability="today next-2-hours">
+                    <div class="doc-card-header">
+                        <img src="images/doctors/doctor_7.jpg" alt="Dr. Sonia Kapoor" class="doc-avatar">
+                        <div class="doc-info-brief">
+                            <h3>Dr. Sonia Kapoor</h3><span class="doc-specialty text-primary">General
+                                Physician</span><span class="doc-qual">MBBS, DNB, Advanced Physician</span>
+                            <div class="doc-rating"><i data-lucide="star" fill="#FFC107" color="#FFC107" width="16"
+                                    height="16"></i><span>4.9 (180+ Reviews)</span></div>
+                        </div>
+                    </div>
+                    <div class="doc-card-details">
+                        <div class="detail-row"><i data-lucide="briefcase" class="text-muted" width="16"
+                                height="16"></i><span>15 Years Exp.</span></div>
+                        <div class="detail-row"><i data-lucide="languages" class="text-muted" width="16"
+                                height="16"></i><span>English, Punjabi</span></div>
+                    </div>
+                    <div class="doc-card-footer">
+                        <div class="price-availability"><span class="price">Rs.200</span><span
+                                class="availability text-teal"><i data-lucide="clock" width="14" height="14"></i>
+                                Available in 10m</span></div>
+                        <a href="booking.html" class="btn btn-primary btn-block">Consult Now</a>
+                    </div>
+                </div>
+
+                <div class="doctor-card" data-specialty="general" data-availability="today next-2-hours"
+                    data-doctor="dr-reem">
+                    <div class="doc-card-header">
+                        <img src="images/doctors/dr-reem.jpeg" alt="Dr. Reem Banan د. بنان" class="doc-avatar">
+                        <div class="doc-info-brief">
+                            <h3>Dr. Reem Banan د. بنان</h3><span class="doc-specialty text-primary">General
+                                Physician & Aesthetics</span><span class="doc-qual">MBBS, MD (Medicine)</span>
+                            <div class="doc-rating"><i data-lucide="star" fill="#FFC107" color="#FFC107" width="16"
+                                    height="16"></i><span>5.0 (150+ Reviews)</span></div>
+                        </div>
+                    </div>
+                    <div class="doc-card-details">
+                        <div class="detail-row"><i data-lucide="briefcase" class="text-muted" width="16"
+                                height="16"></i><span>10 Years Exp.</span></div>
+                        <div class="detail-row"><i data-lucide="languages" class="text-muted" width="16"
+                                height="16"></i><span>English, Arabic, Hindi</span></div>
+                    </div>
+                    <div class="doc-card-footer">
+                        <div class="price-availability"><span class="price">Rs.500</span><span
+                                class="availability text-teal"><i data-lucide="clock" width="14" height="14"></i>
+                                Available Today</span></div>
+                        <a href="booking.html" class="btn btn-primary btn-block">Consult Now</a>
+                    </div>
+                </div>
+
+                <!-- Psychiatry -->
+                <div class="doctor-card" data-specialty="psychiatry" data-availability="today next-2-hours">
+                    <div class="doc-card-header">
+                        <img src="images/doctors/doctor_8.jpg" alt="Dr. Rohan Mehta" class="doc-avatar">
+                        <div class="doc-info-brief">
+                            <h3>Dr. Rohan Mehta</h3><span class="doc-specialty text-primary">Psychiatry</span><span
+                                class="doc-qual">MBBS, DPM, Neuropsychiatrist</span>
+                            <div class="doc-rating"><i data-lucide="star" fill="#FFC107" color="#FFC107" width="16"
+                                    height="16"></i><span>4.8 (85+ Reviews)</span></div>
+                        </div>
+                    </div>
+                    <div class="doc-card-details">
+                        <div class="detail-row"><i data-lucide="briefcase" class="text-muted" width="16"
+                                height="16"></i><span>12 Years Exp.</span></div>
+                        <div class="detail-row"><i data-lucide="languages" class="text-muted" width="16"
+                                height="16"></i><span>English, Marathi</span></div>
+                    </div>
+                    <div class="doc-card-footer">
+                        <div class="price-availability"><span class="price">Rs.200</span><span
+                                class="availability text-teal"><i data-lucide="clock" width="14" height="14"></i>
+                                Available in 45m</span></div>
+                        <a href="booking.html" class="btn btn-primary btn-block">Consult Now</a>
+                    </div>
+                </div>
+
+                <div class="doctor-card" data-specialty="psychiatry" data-availability="today">
+                    <div class="doc-card-header">
+                        <img src="images/doctors/doctor_9.jpg" alt="Dr. Aisha Khan" class="doc-avatar">
+                        <div class="doc-info-brief">
+                            <h3>Dr. Aisha Khan</h3><span class="doc-specialty text-primary">Clinical
+                                Psychology</span><span class="doc-qual">PhD (Clinical Psychology), CBT Expert</span>
+                            <div class="doc-rating"><i data-lucide="star" fill="#FFC107" color="#FFC107" width="16"
+                                    height="16"></i><span>5.0 (92+ Reviews)</span></div>
+                        </div>
+                    </div>
+                    <div class="doc-card-details">
+                        <div class="detail-row"><i data-lucide="briefcase" class="text-muted" width="16"
+                                height="16"></i><span>9 Years Exp.</span></div>
+                        <div class="detail-row"><i data-lucide="languages" class="text-muted" width="16"
+                                height="16"></i><span>English, Hindi, Urdu</span></div>
+                    </div>
+                    <div class="doc-card-footer">
+                        <div class="price-availability"><span class="price">Rs.200</span><span
+                                class="availability text-teal"><i data-lucide="clock" width="14" height="14"></i>
+                                Available Today, 4 PM</span></div>
+                        <a href="booking.html" class="btn btn-primary btn-block">Consult Now</a>
+                    </div>
+                </div>
+
+                <div class="doctor-card" data-specialty="psychiatry" data-availability="tomorrow">
+                    <div class="doc-card-header">
+                        <img src="images/doctors/doctor_10.jpg" alt="Dr. Prakash Iyer" class="doc-avatar">
+                        <div class="doc-info-brief">
+                            <h3>Dr. Prakash Iyer</h3><span class="doc-specialty text-primary">Psychiatry</span><span
+                                class="doc-qual">MBBS, MD (Psychiatry), Addiction Specialist</span>
+                            <div class="doc-rating"><i data-lucide="star" fill="#FFC107" color="#FFC107" width="16"
+                                    height="16"></i><span>4.7 (150+ Reviews)</span></div>
+                        </div>
+                    </div>
+                    <div class="doc-card-details">
+                        <div class="detail-row"><i data-lucide="briefcase" class="text-muted" width="16"
+                                height="16"></i><span>20 Years Exp.</span></div>
+                        <div class="detail-row"><i data-lucide="languages" class="text-muted" width="16"
+                                height="16"></i><span>English, Tamil</span></div>
+                    </div>
+                    <div class="doc-card-footer">
+                        <div class="price-availability"><span class="price">Rs.200</span><span class="availability"><i
+                                    data-lucide="calendar" width="14" height="14"></i> Tomorrow, 11 AM</span></div>
+                        <a href="booking.html" class="btn btn-primary btn-block">Consult Now</a>
+                    </div>
+                </div>
+
+                <div class="doctor-card" data-specialty="psychiatry" data-availability="today next-2-hours">
+                    <div class="doc-card-header">
+                        <img src="images/doctors/doctor_11.jpg" alt="Dr. Meera Das" class="doc-avatar">
+                        <div class="doc-info-brief">
+                            <h3>Dr. Meera Das</h3><span class="doc-specialty text-primary">Psychologist</span><span
+                                class="doc-qual">MSc (Clinical Psych), Child Behavioral Expert</span>
+                            <div class="doc-rating"><i data-lucide="star" fill="#FFC107" color="#FFC107" width="16"
+                                    height="16"></i><span>4.9 (75+ Reviews)</span></div>
+                        </div>
+                    </div>
+                    <div class="doc-card-details">
+                        <div class="detail-row"><i data-lucide="briefcase" class="text-muted" width="16"
+                                height="16"></i><span>5 Years Exp.</span></div>
+                        <div class="detail-row"><i data-lucide="languages" class="text-muted" width="16"
+                                height="16"></i><span>English, Bengali</span></div>
+                    </div>
+                    <div class="doc-card-footer">
+                        <div class="price-availability"><span class="price">Rs.200</span><span
+                                class="availability text-teal"><i data-lucide="clock" width="14" height="14"></i>
+                                Available in 30m</span></div>
+                        <a href="booking.html" class="btn btn-primary btn-block">Consult Now</a>
+                    </div>
+                </div>
+
+                <div class="doctor-card" data-specialty="psychiatry" data-availability="tomorrow">
+                    <div class="doc-card-header">
+                        <img src="https://images.unsplash.com/photo-1600858525892-0bda0ceab3f7?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+                            alt="Dr. Vivek Sharma" class="doc-avatar">
+                        <div class="doc-info-brief">
+                            <h3>Dr. Vivek Sharma</h3><span class="doc-specialty text-primary">Psychiatry</span><span
+                                class="doc-qual">MBBS, DPM, Geriatric Psychiatrist</span>
+                            <div class="doc-rating"><i data-lucide="star" fill="#FFC107" color="#FFC107" width="16"
+                                    height="16"></i><span>4.6 (40+ Reviews)</span></div>
+                        </div>
+                    </div>
+                    <div class="doc-card-details">
+                        <div class="detail-row"><i data-lucide="briefcase" class="text-muted" width="16"
+                                height="16"></i><span>8 Years Exp.</span></div>
+                        <div class="detail-row"><i data-lucide="languages" class="text-muted" width="16"
+                                height="16"></i><span>English, Hindi</span></div>
+                    </div>
+                    <div class="doc-card-footer">
+                        <div class="price-availability"><span class="price">Rs.200</span><span class="availability"><i
+                                    data-lucide="calendar" width="14" height="14"></i> Tomorrow, 9 AM</span></div>
+                        <a href="booking.html" class="btn btn-primary btn-block">Consult Now</a>
+                    </div>
+                </div>
+
+                <!-- Women's Health (Gynecology) -->
+                <div class="doctor-card" data-specialty="womens" data-availability="tomorrow">
+                    <div class="doc-card-header">
+                        <img src="images/doctors/doctor_13.jpg" alt="Dr. Priya Patel" class="doc-avatar">
+                        <div class="doc-info-brief">
+                            <h3>Dr. Priya Patel</h3><span class="doc-specialty text-primary">Gynecology</span><span
+                                class="doc-qual">MBBS, MS (OBG), IVF Specialist</span>
+                            <div class="doc-rating"><i data-lucide="star" fill="#FFC107" color="#FFC107" width="16"
+                                    height="16"></i><span>5.0 (200+ Reviews)</span></div>
+                        </div>
+                    </div>
+                    <div class="doc-card-details">
+                        <div class="detail-row"><i data-lucide="briefcase" class="text-muted" width="16"
+                                height="16"></i><span>15 Years Exp.</span></div>
+                        <div class="detail-row"><i data-lucide="languages" class="text-muted" width="16"
+                                height="16"></i><span>English, Hindi, Gujarati</span></div>
+                    </div>
+                    <div class="doc-card-footer">
+                        <div class="price-availability"><span class="price">Rs.200</span><span class="availability"><i
+                                    data-lucide="calendar" width="14" height="14"></i> Tomorrow, 10 AM</span></div>
+                        <a href="booking.html" class="btn btn-primary btn-block">Consult Now</a>
+                    </div>
+                </div>
+
+                <div class="doctor-card" data-specialty="womens" data-availability="today next-2-hours">
+                    <div class="doc-card-header">
+                        <img src="images/doctors/doctor_14.jpg" alt="Dr. Sunita Reddy" class="doc-avatar">
+                        <div class="doc-info-brief">
+                            <h3>Dr. Sunita Reddy</h3><span class="doc-specialty text-primary">Gynecology</span><span
+                                class="doc-qual">MBBS, DGO, High-Risk Pregnancy</span>
+                            <div class="doc-rating"><i data-lucide="star" fill="#FFC107" color="#FFC107" width="16"
+                                    height="16"></i><span>4.8 (110+ Reviews)</span></div>
+                        </div>
+                    </div>
+                    <div class="doc-card-details">
+                        <div class="detail-row"><i data-lucide="briefcase" class="text-muted" width="16"
+                                height="16"></i><span>10 Years Exp.</span></div>
+                        <div class="detail-row"><i data-lucide="languages" class="text-muted" width="16"
+                                height="16"></i><span>English, Telugu</span></div>
+                    </div>
+                    <div class="doc-card-footer">
+                        <div class="price-availability"><span class="price">Rs.200</span><span
+                                class="availability text-teal"><i data-lucide="clock" width="14" height="14"></i>
+                                Available in 20m</span></div>
+                        <a href="booking.html" class="btn btn-primary btn-block">Consult Now</a>
+                    </div>
+                </div>
+
+                <div class="doctor-card" data-specialty="womens" data-availability="today">
+                    <div class="doc-card-header">
+                        <img src="images/doctors/doctor_15.jpg" alt="Dr. Kavita Singh" class="doc-avatar">
+                        <div class="doc-info-brief">
+                            <h3>Dr. Kavita Singh</h3><span class="doc-specialty text-primary">Gynecology</span><span
+                                class="doc-qual">MBBS, MS, Minimally Invasive Surgeon</span>
+                            <div class="doc-rating"><i data-lucide="star" fill="#FFC107" color="#FFC107" width="16"
+                                    height="16"></i><span>4.7 (95+ Reviews)</span></div>
+                        </div>
+                    </div>
+                    <div class="doc-card-details">
+                        <div class="detail-row"><i data-lucide="briefcase" class="text-muted" width="16"
+                                height="16"></i><span>8 Years Exp.</span></div>
+                        <div class="detail-row"><i data-lucide="languages" class="text-muted" width="16"
+                                height="16"></i><span>English, Hindi</span></div>
+                    </div>
+                    <div class="doc-card-footer">
+                        <div class="price-availability"><span class="price">Rs.200</span><span
+                                class="availability text-teal"><i data-lucide="clock" width="14" height="14"></i>
+                                Available Today, 5 PM</span></div>
+                        <a href="booking.html" class="btn btn-primary btn-block">Consult Now</a>
+                    </div>
+                </div>
+
+                <div class="doctor-card" data-specialty="womens" data-availability="tomorrow">
+                    <div class="doc-card-header">
+                        <img src="images/doctors/doctor_16.jpg" alt="Dr. Anita Desai" class="doc-avatar">
+                        <div class="doc-info-brief">
+                            <h3>Dr. Anita Desai</h3><span class="doc-specialty text-primary">Gynecology</span><span
+                                class="doc-qual">MBBS, MD (OBG), Fetal Medicine</span>
+                            <div class="doc-rating"><i data-lucide="star" fill="#FFC107" color="#FFC107" width="16"
+                                    height="16"></i><span>4.9 (300+ Reviews)</span></div>
+                        </div>
+                    </div>
+                    <div class="doc-card-details">
+                        <div class="detail-row"><i data-lucide="briefcase" class="text-muted" width="16"
+                                height="16"></i><span>22 Years Exp.</span></div>
+                        <div class="detail-row"><i data-lucide="languages" class="text-muted" width="16"
+                                height="16"></i><span>English, Marathi</span></div>
+                    </div>
+                    <div class="doc-card-footer">
+                        <div class="price-availability"><span class="price">Rs.200</span><span class="availability"><i
+                                    data-lucide="calendar" width="14" height="14"></i> Tomorrow, 1:30 PM</span></div>
+                        <a href="booking.html" class="btn btn-primary btn-block">Consult Now</a>
+                    </div>
+                </div>
+
+                <div class="doctor-card" data-specialty="womens" data-availability="today next-2-hours">
+                    <div class="doc-card-header">
+                        <img src="images/doctors/doctor_17.jpg" alt="Dr. Maya Nair" class="doc-avatar">
+                        <div class="doc-info-brief">
+                            <h3>Dr. Maya Nair</h3><span class="doc-specialty text-primary">Gynecology</span><span
+                                class="doc-qual">MBBS, DGO, Menopause Specialist</span>
+                            <div class="doc-rating"><i data-lucide="star" fill="#FFC107" color="#FFC107" width="16"
+                                    height="16"></i><span>4.6 (50+ Reviews)</span></div>
+                        </div>
+                    </div>
+                    <div class="doc-card-details">
+                        <div class="detail-row"><i data-lucide="briefcase" class="text-muted" width="16"
+                                height="16"></i><span>7 Years Exp.</span></div>
+                        <div class="detail-row"><i data-lucide="languages" class="text-muted" width="16"
+                                height="16"></i><span>English, Malayalam</span></div>
+                    </div>
+                    <div class="doc-card-footer">
+                        <div class="price-availability"><span class="price">Rs.200</span><span
+                                class="availability text-teal"><i data-lucide="clock" width="14" height="14"></i>
+                                Available in 5m</span></div>
+                        <a href="booking.html" class="btn btn-primary btn-block">Consult Now</a>
+                    </div>
+                </div>
+
+                <!-- Pediatrics -->
+                <div class="doctor-card" data-specialty="pediatrics" data-availability="today next-2-hours">
+                    <div class="doc-card-header">
+                        <img src="https://images.unsplash.com/photo-1582750433449-648ed1276023?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+                            alt="Dr. Vikram Singh" class="doc-avatar">
+                        <div class="doc-info-brief">
+                            <h3>Dr. Vikram Singh</h3><span class="doc-specialty text-primary">Pediatrics</span><span
+                                class="doc-qual">MBBS, MD (Pediatrics), Neonatologist</span>
+                            <div class="doc-rating"><i data-lucide="star" fill="#FFC107" color="#FFC107" width="16"
+                                    height="16"></i><span>4.7 (150+ Reviews)</span></div>
+                        </div>
+                    </div>
+                    <div class="doc-card-details">
+                        <div class="detail-row"><i data-lucide="briefcase" class="text-muted" width="16"
+                                height="16"></i><span>10 Years Exp.</span></div>
+                        <div class="detail-row"><i data-lucide="languages" class="text-muted" width="16"
+                                height="16"></i><span>English, Hindi, Punjabi</span></div>
+                    </div>
+                    <div class="doc-card-footer">
+                        <div class="price-availability"><span class="price">Rs.200</span><span
+                                class="availability text-teal"><i data-lucide="clock" width="14" height="14"></i>
+                                Available in 10m</span></div>
+                        <a href="booking.html" class="btn btn-primary btn-block">Consult Now</a>
+                    </div>
+                </div>
+
+                <div class="doctor-card" data-specialty="pediatrics" data-availability="tomorrow">
+                    <div class="doc-card-header">
+                        <img src="https://images.unsplash.com/photo-1605635882583-b9acb88dcbd9?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+                            alt="Dr. Shruti Jain" class="doc-avatar">
+                        <div class="doc-info-brief">
+                            <h3>Dr. Shruti Jain</h3><span class="doc-specialty text-primary">Pediatrics</span><span
+                                class="doc-qual">MBBS, DCH, Pediatric Allergy</span>
+                            <div class="doc-rating"><i data-lucide="star" fill="#FFC107" color="#FFC107" width="16"
+                                    height="16"></i><span>4.9 (210+ Reviews)</span></div>
+                        </div>
+                    </div>
+                    <div class="doc-card-details">
+                        <div class="detail-row"><i data-lucide="briefcase" class="text-muted" width="16"
+                                height="16"></i><span>14 Years Exp.</span></div>
+                        <div class="detail-row"><i data-lucide="languages" class="text-muted" width="16"
+                                height="16"></i><span>English, Hindi</span></div>
+                    </div>
+                    <div class="doc-card-footer">
+                        <div class="price-availability"><span class="price">Rs.200</span><span class="availability"><i
+                                    data-lucide="calendar" width="14" height="14"></i> Tomorrow, 11 AM</span></div>
+                        <a href="booking.html" class="btn btn-primary btn-block">Consult Now</a>
+                    </div>
+                </div>
+
+                <div class="doctor-card" data-specialty="pediatrics" data-availability="today">
+                    <div class="doc-card-header">
+                        <img src="images/doctors/doctor_20.jpg" alt="Dr. Tariq Ali" class="doc-avatar">
+                        <div class="doc-info-brief">
+                            <h3>Dr. Tariq Ali</h3><span class="doc-specialty text-primary">Pediatrics</span><span
+                                class="doc-qual">MBBS, MD, Pediatric Neurology</span>
+                            <div class="doc-rating"><i data-lucide="star" fill="#FFC107" color="#FFC107" width="16"
+                                    height="16"></i><span>4.8 (88+ Reviews)</span></div>
+                        </div>
+                    </div>
+                    <div class="doc-card-details">
+                        <div class="detail-row"><i data-lucide="briefcase" class="text-muted" width="16"
+                                height="16"></i><span>9 Years Exp.</span></div>
+                        <div class="detail-row"><i data-lucide="languages" class="text-muted" width="16"
+                                height="16"></i><span>English, Hindi, Urdu</span></div>
+                    </div>
+                    <div class="doc-card-footer">
+                        <div class="price-availability"><span class="price">Rs.200</span><span
+                                class="availability text-teal"><i data-lucide="clock" width="14" height="14"></i>
+                                Available Today, 7 PM</span></div>
+                        <a href="booking.html" class="btn btn-primary btn-block">Consult Now</a>
+                    </div>
+                </div>
+
+                <div class="doctor-card" data-specialty="pediatrics" data-availability="today next-2-hours">
+                    <div class="doc-card-header">
+                        <img src="images/doctors/doctor_21.jpg" alt="Dr. Karan Kapoor" class="doc-avatar">
+                        <div class="doc-info-brief">
+                            <h3>Dr. Karan Kapoor</h3><span class="doc-specialty text-primary">Pediatrics</span><span
+                                class="doc-qual">MBBS, DNB (Peds), Pulmonology</span>
+                            <div class="doc-rating"><i data-lucide="star" fill="#FFC107" color="#FFC107" width="16"
+                                    height="16"></i><span>4.5 (30+ Reviews)</span></div>
+                        </div>
+                    </div>
+                    <div class="doc-card-details">
+                        <div class="detail-row"><i data-lucide="briefcase" class="text-muted" width="16"
+                                height="16"></i><span>3 Years Exp.</span></div>
+                        <div class="detail-row"><i data-lucide="languages" class="text-muted" width="16"
+                                height="16"></i><span>English, Hindi</span></div>
+                    </div>
+                    <div class="doc-card-footer">
+                        <div class="price-availability"><span class="price">Rs.200</span><span
+                                class="availability text-teal"><i data-lucide="clock" width="14" height="14"></i>
+                                Available in 1h</span></div>
+                        <a href="booking.html" class="btn btn-primary btn-block">Consult Now</a>
+                    </div>
+                </div>
+
+                <div class="doctor-card" data-specialty="pediatrics" data-availability="tomorrow">
+                    <div class="doc-card-header">
+                        <img src="images/doctors/doctor_22.jpg" alt="Dr. Lata M" class="doc-avatar">
+                        <div class="doc-info-brief">
+                            <h3>Dr. Lata M</h3><span class="doc-specialty text-primary">Pediatrics</span><span
+                                class="doc-qual">MBBS, MD (Pediatrics), Growth Expert</span>
+                            <div class="doc-rating"><i data-lucide="star" fill="#FFC107" color="#FFC107" width="16"
+                                    height="16"></i><span>4.9 (140+ Reviews)</span></div>
+                        </div>
+                    </div>
+                    <div class="doc-card-details">
+                        <div class="detail-row"><i data-lucide="briefcase" class="text-muted" width="16"
+                                height="16"></i><span>18 Years Exp.</span></div>
+                        <div class="detail-row"><i data-lucide="languages" class="text-muted" width="16"
+                                height="16"></i><span>English, Kannada</span></div>
+                    </div>
+                    <div class="doc-card-footer">
+                        <div class="price-availability"><span class="price">Rs.200</span><span class="availability"><i
+                                    data-lucide="calendar" width="14" height="14"></i> Tomorrow, 8 AM</span></div>
+                        <a href="booking.html" class="btn btn-primary btn-block">Consult Now</a>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center text-muted" style="padding: 20px 0;">
+            &copy;
+            <script>document.write(new Date().getFullYear())</script> PulseHealth. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+</body>
+
+</html>

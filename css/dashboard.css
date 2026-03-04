@@ -1,0 +1,131 @@
+/* Dashboard CSS */
+
+.dashboard-section {
+    padding: 40px 0;
+    background-color: var(--bg-light);
+    min-height: calc(100vh - 70px);
+}
+
+.dashboard-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* Sidebar Navigation */
+.dashboard-sidebar {
+    width: 100%;
+}
+
+.dashboard-nav {
+    background: white;
+    border-radius: var(--border-radius-md);
+    padding: 16px;
+    box-shadow: var(--shadow-sm);
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    color: var(--text-dark);
+    border-radius: var(--border-radius-sm);
+    font-weight: 500;
+    margin-bottom: 4px;
+    transition: var(--transition-fast);
+}
+
+.nav-item:hover {
+    background-color: var(--bg-light);
+}
+
+.nav-item.active {
+    background-color: rgba(10, 66, 117, 0.05);
+    color: var(--primary-blue);
+}
+
+.nav-item.active i {
+    color: var(--primary-blue);
+}
+
+/* Main Content Area */
+.dashboard-main {
+    flex: 1;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.dashboard-header h2 {
+    margin: 0;
+}
+
+.consult-card {
+    background: white;
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-sm);
+    padding: 24px;
+    margin-bottom: 20px;
+    border-left: 4px solid var(--border-color);
+}
+
+.consult-card.active-consult {
+    border-left-color: var(--secondary-teal);
+    background: linear-gradient(to right, white, rgba(0, 184, 217, 0.02));
+}
+
+.consult-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+}
+
+.consult-doc {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.consult-doc img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.consult-doc h4 {
+    margin: 0 0 4px 0;
+    font-size: 1.1rem;
+}
+
+.consult-status {
+    text-align: right;
+}
+
+.consult-actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--bg-light);
+}
+
+/* Desktop */
+@media (min-width: 768px) {
+    .dashboard-layout {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .dashboard-sidebar {
+        width: 250px;
+        position: sticky;
+        top: 90px;
+    }
+}

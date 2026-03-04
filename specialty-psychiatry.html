@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mental Health & Psychiatry | PulseHealth</title>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/doctors.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="navbar-brand">
+                <i data-lucide="stethoscope" class="text-teal"></i>
+                Pulse<span>Health</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="doctors.html">Find a Doctor</a>
+                <a href="dashboard.html">My Dashboard</a>
+                <a href="about.html">About Us</a>
+                <a href="partner.html">Partner</a>
+                <a href="booking.html" class="btn btn-primary" style="padding: 8px 20px;">Book Consult</a>
+            </div>
+
+            <button class="mobile-menu-btn">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu">
+        <a href="doctors.html">Find a Doctor</a>
+        <a href="dashboard.html">My Dashboard</a>
+        <a href="about.html">About Us</a>
+        <a href="partner.html">Partner</a>
+        <a href="booking.html" class="btn btn-primary btn-block text-center mt-4">Book Rs.200 Consult</a>
+    </div>
+
+    <!-- Page Header -->
+    <header class="page-header text-white" style="background-color: var(--teal);">
+        <div class="container">
+            <h1 style="display: flex; align-items: center; gap: 10px; justify-content: center;"><i data-lucide="brain"
+                    width="32" height="32"></i> Mental Health Specialists</h1>
+            <p>Connect with highly qualified Psychiatrists and Psychologists instantly for just Rs.200</p>
+        </div>
+    </header>
+
+    <!-- Directory Content -->
+    <section class="directory-section section">
+        <div class="container directory-layout" style="grid-template-columns: 1fr;">
+
+            <!-- Doctors Grid -->
+            <main class="doctors-grid" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));">
+
+                <!-- Doctor Card 2 -->
+                <div class="doctor-card">
+                    <div class="doc-card-header">
+                        <img src="https://images.unsplash.com/photo-1612349317150-e410f624c427?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+                            alt="Dr. Rohan Mehta" class="doc-avatar">
+                        <div class="doc-info-brief">
+                            <h3>Dr. Rohan Mehta</h3>
+                            <span class="doc-specialty text-primary">Psychiatry</span>
+                            <span class="doc-qual">MBBS, DPM</span>
+                            <div class="doc-rating">
+                                <i data-lucide="star" fill="#FFC107" color="#FFC107" width="16" height="16"></i>
+                                <span>4.8 (85+ Reviews)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="doc-card-details">
+                        <div class="detail-row">
+                            <i data-lucide="briefcase" class="text-muted" width="16" height="16"></i>
+                            <span>12 Years Experience</span>
+                        </div>
+                        <div class="detail-row">
+                            <i data-lucide="languages" class="text-muted" width="16" height="16"></i>
+                            <span>English, Marathi</span>
+                        </div>
+                    </div>
+                    <div class="doc-card-footer">
+                        <div class="price-availability">
+                            <span class="price">Rs.200</span>
+                            <span class="availability text-teal"><i data-lucide="clock" width="14" height="14"></i>
+                                Available in 45m</span>
+                        </div>
+                        <a href="booking.html" class="btn btn-primary btn-block">Book Video Consult</a>
+                    </div>
+                </div>
+
+                <!-- Doctor Card -->
+                <div class="doctor-card">
+                    <div class="doc-card-header">
+                        <img src="https://images.unsplash.com/photo-1594824436951-7f126f09bf84?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+                            alt="Dr. Sneha Verma" class="doc-avatar">
+                        <div class="doc-info-brief">
+                            <h3>Dr. Sneha Verma</h3>
+                            <span class="doc-specialty text-primary">Clinical Psychology</span>
+                            <span class="doc-qual">Ph.D in Psychology</span>
+                            <div class="doc-rating">
+                                <i data-lucide="star" fill="#FFC107" color="#FFC107" width="16" height="16"></i>
+                                <span>4.9 (210+ Reviews)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="doc-card-details">
+                        <div class="detail-row">
+                            <i data-lucide="briefcase" class="text-muted" width="16" height="16"></i>
+                            <span>10 Years Experience</span>
+                        </div>
+                        <div class="detail-row">
+                            <i data-lucide="languages" class="text-muted" width="16" height="16"></i>
+                            <span>English, Hindi</span>
+                        </div>
+                    </div>
+                    <div class="doc-card-footer">
+                        <div class="price-availability">
+                            <span class="price">Rs.200</span>
+                            <span class="availability text-teal"><i data-lucide="clock" width="14" height="14"></i>
+                                Available Now</span>
+                        </div>
+                        <a href="booking.html" class="btn btn-primary btn-block">Book Video Consult</a>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center text-muted" style="padding: 20px 0;">
+            &copy;
+            <script>document.write(new Date().getFullYear())</script> PulseHealth. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+</body>
+
+</html>

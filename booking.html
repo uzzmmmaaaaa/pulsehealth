@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instant Booking | PulseHealth</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/booking.css">
+</head>
+
+<body>
+
+    <!-- Minimal Navbar for Checkout -->
+    <nav class="navbar" style="box-shadow: none; border-bottom: 1px solid var(--border-color);">
+        <div class="container" style="justify-content: center;">
+            <a href="index.html" class="navbar-brand">
+                <i data-lucide="stethoscope" class="text-teal"></i>
+                Pulse<span>Health</span> &nbsp;<span class="text-muted" style="font-size:1rem; font-weight: 400;">|
+                    Secure Checkout</span>
+            </a>
+        </div>
+    </nav>
+
+    <section class="booking-section">
+        <div class="booking-container"
+            style="max-width: 600px; margin: 0 auto; background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+            <div class="booking-header text-center mb-4">
+                <h2>Quick Video Consult</h2>
+                <p class="text-muted">Fill out this quick form. Connect with a doctor in minutes.</p>
+            </div>
+
+            <!-- Smart Form -->
+            <form id="smart-booking-form" action="checkout.html" method="GET">
+
+                <div class="form-row" style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+                    <div class="form-group" style="flex: 2;">
+                        <label for="patient-name">Patient Name</label>
+                        <input type="text" id="patient-name" class="form-control" required
+                            placeholder="Enter full name">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label for="patient-age">Age</label>
+                        <input type="number" id="patient-age" class="form-control" required placeholder="Years" min="0"
+                            max="120">
+                    </div>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label for="consult-mode">Choose Consultation Mode</label>
+                    <div class="select-wrapper">
+                        <select id="consult-mode" class="form-control" required>
+                            <option value="video" selected>Video Call</option>
+                            <option value="audio">Audio Call</option>
+                        </select>
+                        <i data-lucide="chevron-down" class="select-icon"></i>
+                    </div>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label for="doctor-specialty">Select Doctor's Specialty</label>
+                    <div class="select-wrapper">
+                        <select id="doctor-specialty" class="form-control" required>
+                            <option value="" disabled selected>Choose a specialty...</option>
+                            <option value="general">General Physician</option>
+                            <option value="womens">Women's Health (Gynecology)</option>
+                            <option value="psychiatry">Psychiatry & Psychology</option>
+                            <option value="pediatrics">Pediatrics</option>
+                        </select>
+                        <i data-lucide="chevron-down" class="select-icon"></i>
+                    </div>
+                </div>
+
+                <div class="form-group mb-4" id="symptoms-section" style="display: none;">
+                    <label style="margin-bottom: 0.5rem; display: block; font-weight: 600;">Quick Select
+                        Symptoms</label>
+                    <div id="dynamic-symptoms" style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+                        <!-- Checkboxes generated here -->
+                    </div>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label for="problem-description">Describe your problem (Optional)</label>
+                    <textarea id="problem-description" class="form-control" rows="3"
+                        placeholder="Any other details the doctor should know?"></textarea>
+                </div>
+
+                <div class="form-footer" style="margin-top: 2rem;">
+                    <div
+                        style="background: #f8fafc; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span style="font-weight: 600; color: #1e293b; display: block;">Consultation Fee</span>
+                            <span id="fee-description" style="color: #64748b; font-size: 0.875rem;">15-min secure video
+                                call</span>
+                        </div>
+                        <div id="fee-amount" style="font-size: 1.25rem; font-weight: 700; color: #0f172a;">Rs. 200</div>
+                    </div>
+
+                    <button type="button" id="proceed-to-pay" class="btn btn-primary btn-block btn-lg"
+                        style="font-size: 1.1rem; padding: 1rem;">
+                        <span id="btn-fee-amount">Proceed to Pay Rs. 200</span>
+                        <i data-lucide="arrow-right" style="margin-left: 0.5rem;"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container text-center">
+            <p>&copy; 2026 PulseHealth. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        lucide.createIcons();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const specialtySelect = document.getElementById('doctor-specialty');
+            const symptomsSection = document.getElementById('symptoms-section');
+            const dynamicSymptomsContainer = document.getElementById('dynamic-symptoms');
+            const proceedBtn = document.getElementById('proceed-to-pay');
+
+            // Symptom Dictionary
+            const symptomsMap = {
+                'general': ['Fever', 'Cough/Cold', 'Body Ache', 'Acidity', 'Headache', '[Others]'],
+                'womens': ['PCOS/PCOD', 'Irregular Periods', 'UTI', 'Pregnancy Query', '[Others]'],
+                'psychiatry': ['Anxiety', 'Depression', 'Sleep Issues', 'Stress', '[Others]'],
+                'pediatrics': ['Child Fever', 'Vaccination Query', 'Stomach ache', '[Others]']
+            };
+
+            const consultMode = document.getElementById('consult-mode');
+            const feeDescription = document.getElementById('fee-description');
+
+            // Handle description updates
+            consultMode.addEventListener('change', (e) => {
+                const mode = e.target.value;
+
+                let desc = '';
+                if (mode === 'audio') {
+                    desc = '15-min secure audio call';
+                } else if (mode === 'video') {
+                    desc = '15-min secure video call';
+                }
+
+                feeDescription.textContent = desc;
+            });
+
+            specialtySelect.addEventListener('change', (e) => {
+                const selected = e.target.value;
+                dynamicSymptomsContainer.innerHTML = ''; // clear
+
+                if (symptomsMap[selected]) {
+                    symptomsSection.style.display = 'block';
+
+                    const checkboxes = [];
+
+                    symptomsMap[selected].forEach(symptom => {
+                        const isOthers = symptom === '[Others]';
+
+                        // Create modern checkbox styling
+                        const label = document.createElement('label');
+                        label.style.display = 'inline-flex';
+                        label.style.alignItems = 'center';
+                        label.style.background = '#f1f5f9';
+                        label.style.padding = '0.5rem 1rem';
+                        label.style.borderRadius = '20px';
+                        label.style.border = '1px solid #cbd5e1';
+                        label.style.cursor = 'pointer';
+                        label.style.transition = 'all 0.2s ease';
+                        label.style.fontSize = '0.9rem';
+
+                        const checkbox = document.createElement('input');
+                        checkbox.type = 'checkbox';
+                        checkbox.value = symptom;
+                        checkbox.style.marginRight = '0.5rem';
+
+                        checkboxes.push({ checkbox, label, isOthers });
+
+                        label.appendChild(checkbox);
+                        label.appendChild(document.createTextNode(symptom));
+
+                        // Visual change on check
+                        checkbox.addEventListener('change', () => {
+                            if (checkbox.checked) {
+                                if (isOthers) {
+                                    // Uncheck everything else
+                                    checkboxes.forEach(item => {
+                                        if (!item.isOthers && item.checkbox.checked) {
+                                            item.checkbox.checked = false;
+                                            item.label.style.background = '#f1f5f9';
+                                            item.label.style.borderColor = '#cbd5e1';
+                                            item.label.style.color = 'inherit';
+                                        }
+                                    });
+                                    label.style.background = '#fef2f2'; /* Light red */
+                                    label.style.borderColor = '#ef4444';
+                                    label.style.color = '#dc2626';
+                                } else {
+                                    // Make sure Others is unchecked when selecting a regular option
+                                    const othersItem = checkboxes.find(i => i.isOthers);
+                                    if (othersItem && othersItem.checkbox.checked) {
+                                        othersItem.checkbox.checked = false;
+                                        othersItem.label.style.background = '#f1f5f9';
+                                        othersItem.label.style.borderColor = '#cbd5e1';
+                                        othersItem.label.style.color = 'inherit';
+                                    }
+                                    label.style.background = '#e0f2fe'; /* Light primary */
+                                    label.style.borderColor = '#0284c7';
+                                    label.style.color = '#0369a1';
+                                }
+                            } else {
+                                label.style.background = '#f1f5f9';
+                                label.style.borderColor = '#cbd5e1';
+                                label.style.color = 'inherit';
+                            }
+                        });
+
+                        dynamicSymptomsContainer.appendChild(label);
+                    });
+                } else {
+                    symptomsSection.style.display = 'none';
+                }
+            });
+
+            // Handle submission logic (for prototype, goes to checkout directly)
+            proceedBtn.addEventListener('click', () => {
+                const name = document.getElementById('patient-name').value;
+                const age = document.getElementById('patient-age').value;
+                const spec = specialtySelect.value;
+
+                if (!name || !age || !spec) {
+                    alert('Please fill out Name, Age, and Select a target specialty.');
+                    return;
+                }
+
+                // Route to checkout
+                window.location.href = 'checkout.html';
+            });
+        });
+    </script>
+</body>
+
+</html>
